@@ -51,14 +51,14 @@ public class StudentController {
 		return "edit_student";
 	}
 	
-	@PostMapping("students/{id}")
+	@PostMapping("/students/{id}")
 	public String updateStudent(@PathVariable Long id,
 			@ModelAttribute("student") Student student,
 			Model model) {
 		
 		//get student from database by id
 		Student existingStudent = studentService.getStudentById(id);
-		existingStudent.setId(student.getId());
+		existingStudent.setId(id);
 		existingStudent.setFirstName(student.getFirstName());
 		existingStudent.setLastName(student.getLastName());
 		existingStudent.setEmail(student.getEmail());
@@ -67,6 +67,14 @@ public class StudentController {
 		studentService.updateStudent(existingStudent);
 		return "redirect:/students";
 		
+	}
+	
+	//handler method to handle delete student request
+	
+	@GetMapping("/students/{id}")
+	public String deleteStudent(@PathVariable Long id) {
+		studentService.deleteStudentById(id);
+		return "redirect:/students";
 	}
 		
 }
